@@ -14,6 +14,7 @@
       height: 100vh;
       margin: 0;
     }
+    <!-- Trigger redeploy -->
 
     .container {
       background-color: rgba(255, 255, 255, 0.8);
@@ -197,7 +198,6 @@
       const name = document.getElementById("signupName").value;
       const password = document.getElementById("signupPassword").value;
   
-      // Just for demo, pretend we are logged in
       currentUser = email;
       document.getElementById("signupModal").style.display = "none";
       document.getElementById("mainContainer").style.display = "block";
@@ -212,7 +212,7 @@
     }
   
     async function loadContacts() {
-      const res = await fetch('http://localhost:3000/contacts');
+      const res = await fetch('/contacts');
       contacts = await res.json();
       displayContacts();
     }
@@ -226,13 +226,13 @@
         email: document.getElementById("contactEmail").value,
         birthday: document.getElementById("contactBirthday").value,
         address: document.getElementById("contactAddress").value,
-        photo: null // Photo upload not yet implemented
+        photo: null
       };
   
       let res;
       if (editingIndex !== null) {
         const contactId = contacts[editingIndex]._id;
-        res = await fetch(`http://localhost:3000/contacts/${contactId}`, {
+        res = await fetch(`/contacts/${contactId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(contact)
@@ -240,7 +240,7 @@
         contacts[editingIndex] = await res.json();
         editingIndex = null;
       } else {
-        res = await fetch('http://localhost:3000/contacts', {
+        res = await fetch('/contacts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(contact)
@@ -255,7 +255,7 @@
   
     async function deleteContact(index) {
       const contactId = contacts[index]._id;
-      await fetch(`http://localhost:3000/contacts/${contactId}`, {
+      await fetch(`/contacts/${contactId}`, {
         method: 'DELETE'
       });
       contacts.splice(index, 1);
@@ -330,6 +330,7 @@
       document.getElementById("signupModal").style.display = "flex";
     };
   </script>
+  
   
 </body>
 </html>
